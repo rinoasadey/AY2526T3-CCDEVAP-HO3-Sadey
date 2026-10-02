@@ -3,9 +3,12 @@ let score=0;
 
 const operators = ["+", "-", "*"];
 
+let answer, numOperator; // additional variables
+
 function checkAnswer() {
-    answer = document.getElementById("answer").value
-    if (answer == correctAnswer) {
+    answerInput = document.getElementById("answer");
+    answer = Number(answerInput.value);
+    if (answer === correctAnswer) {
         score++;
         document.getElementById("score").innerHTML = score;
         if (score == 5) {
@@ -21,7 +24,7 @@ function checkAnswer() {
         document.getElementById("message").style.color = "red";
         document.getElementById("question").innerHTML = generateQuestion();
     }
-    document.getElementById("answer").value = "";
+    answerInput.value = "";
 }
 
 function playAgain() {
@@ -34,10 +37,21 @@ function playAgain() {
 }
 
 function generateQuestion() {
-    num1 = Math.floor(Math.random() * 10);
-    num2 = Math.floor(Math.random() * 10);
+    num1 = Math.floor(Math.random() * 11);
+    num2 = Math.floor(Math.random() * 11);
     numOperator = Math.floor(Math.random() * 3);
     operator = operators[numOperator];
-    correctAnswer = eval(`${num1} ${operator} ${num2}`);
+    correctAnswer = computeAnswer(num1, operator, num2);
     return `${num1} ${operator} ${num2}`;
+}
+
+function computeAnswer(a, op, b) {
+    switch (op) {
+        case "+":
+            return a + b;
+        case "-":
+            return a - b;
+        case "*":
+            return a * b;
+    }
 }
